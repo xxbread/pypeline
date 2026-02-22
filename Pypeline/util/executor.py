@@ -1,10 +1,10 @@
 
-from . import Log, Tmp
+from . import Log, Temp
 import subprocess
 import sys
 
 class Executor:
-    cwd = Tmp.root
+    cwd = Temp.root
     debug = True
     seperated = True
     output = None
@@ -25,6 +25,7 @@ class Executor:
             stdin=subprocess.PIPE,
             creationflags=subprocess.CREATE_NEW_CONSOLE,
             text=True,
+            cwd=cls.cwd,
         )
 
     @classmethod
@@ -40,6 +41,7 @@ class Executor:
                 command,
                 shell=True,
                 check=True,
+                cwd=cls.cwd,
             )
         
         # #2 Seperated Output
@@ -54,6 +56,7 @@ class Executor:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
+                cwd=cls.cwd,
             )
 
             for line in process.stdout:

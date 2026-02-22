@@ -19,5 +19,8 @@ if __name__ == "__main__":
         _output = args[1]
     except IndexError:
         pass
-
-    pypeline(_input, _output)
+    
+    try:
+        pypeline(_input, _output)
+    except KeyboardInterrupt:
+        os._exit(1)
