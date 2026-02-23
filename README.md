@@ -1,7 +1,7 @@
 
 <div align="center">
 
-### [![Python](https://img.shields.io/badge/Python-3.12-blue)] [![License](https://img.shields.io/badge/License-APGLv3-orange)]
+### [![Python](https://img.shields.io/badge/Python-3.12-blue)]() [![License](https://img.shields.io/badge/License-AGPLv3-orange)]()
 
 ### [License](#License) • [Introduction](#introduction)
 
