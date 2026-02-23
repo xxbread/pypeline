@@ -1,9 +1,9 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/License-blue)](#license) [![Introduction](https://img.shields.io/badge/Introduction-green)](#introduction)
+### [![Python](https://img.shields.io/badge/Python-3.12-blue)] [![License](https://img.shields.io/badge/License-APGLv3-orange)]
 
-[License](#License) • [Introduction](#introduction)
+### [License](#License) • [Introduction](#introduction)
 
 </div>
 
