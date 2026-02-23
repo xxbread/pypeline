@@ -1,7 +1,11 @@
 
-# [![License](https://img.shields.io/badge/License-blue)](#license) [![Introduction](https://img.shields.io/badge/Introduction-green)](#introduction)
+<div align="center">
 
-### [License](#License) • [Introduction](#introduction)
+[![License](https://img.shields.io/badge/License-blue)](#license) [![Introduction](https://img.shields.io/badge/Introduction-green)](#introduction)
+
+[License](#License) • [Introduction](#introduction)
+
+</div>
 
 # License
 This project is licensed under the [GNU Affero General Public License v3.0 (AGPLv3)](https://github.com/xxbread/pypeline/blob/main/LICENSE).
