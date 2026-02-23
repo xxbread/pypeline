@@ -1,10 +1,11 @@
 
+<div align="center">
 
-### [Python]() [License]()
+### [![Python](https://img.shields.io/badge/Python-3.12-blue)]() [![License](https://img.shields.io/badge/License-AGPLv3-orange)]()
 
 ### [Introduction](#Introduction) • [Usage](#Usage) • [License](#License)
 
-
+</div>
 
 ---
 
