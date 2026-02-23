@@ -1,14 +1,83 @@
 
-from ..util import Executor, Log, Temp, Results, Util
+from ..util import Executor, Temp, Results, Util
 from typing import Literal
 import shutil
 import os
 
 class Pyarmor92:
+
+    counter = 1
+    @classmethod
+    def _results(cls, mode: Literal["ecc", "rft"]) -> None:
+        '''
+        Collect all files in Results and replace original script with the generated one.
+        '''
+
+        original_script = Temp.path("main.py")
+        pyarmor_script = os.path.join(Temp.path("dist"), "main.py")
+        
+        # .pyarmor config
+        shutil.copytree(Temp.path(".pyarmor"), Results.path(f".pyarmor92_{mode}-{cls.counter}"))
+        Util.rmTree(Temp.path(".pyarmor"), raiseError=False)
+
+        # log result
+        shutil.copy(pyarmor_script, Results.path(f".pyarmor92_{mode}-{cls.counter}.py"))
+
+        # replace original script
+        os.remove(original_script)
+        shutil.copy(pyarmor_script, original_script)
+        Util.rmTree(Temp.path("dist"), raiseError=False)
+        cls.counter += 1
+
+    @classmethod
+    def RFT(cls) -> None:
+        '''
+        Build Pyarmor RFT Script. (Obfuscate Source Code With Changed Names)
+        '''
+
+        # Verify Temp Dir State (requires project files)
+        Temp.verify()
+
+        # RFT Settings
+        scripts = [
+            "pyarmor env -p set rft:remove_assert 1",
+            "pyarmor env -p set rft:remove_docstr 1",
+            "pyarmor env -p set rft:builtin_mode 1",
+            "pyarmor env -p set rft:argument_mode 3",
+            "pyarmor env -p set rft:export_mode 0",
+
+            "pyarmor build --autofix 2",
+            "pyarmor build --randname 1",
+        ]
+
+        # Initialize Pyarmor Environment
+        Executor.run("pyarmor init -C -e main.py")
+
+        # Setup RFT Environment
+        for script in scripts:
+            Executor.run(script)
+
+        # Build RFT Script
+        Executor.run("pyarmor build --rft")
+        cls._results("rft")
     
     @classmethod
-    def protect(cls) -> None:
-        pass
+    def ECC(cls) -> None:
+        '''
+        Build Pyarmor ECC Script. Main Protection Method. 
+        Documentation at: https://pyarmor.eke.org.cn/archive/v9/docs/en/user/concepts.html#term-ECC-Script
+        Building ECC Requires a C compiler. # TODO: ADD DOWNLOAD LINK OR C COMPILER CHECK
+        '''
+
+        # Verify Temp Dir State (requires project files)
+        Temp.verify()
+
+        # Initialize Pyarmor Environment
+        Executor.run("pyarmor init -C -e main.py")
+
+        # Build ECC Script
+        Executor.run("pyarmor build --ecc")
+        cls._results("ecc")
 
 class Pyarmor91:
     options = []
@@ -17,7 +86,6 @@ class Pyarmor91:
     
     @classmethod
     def configure(cls, mode: Mode) -> None:
-        cls.options = []
 
         ARGS_PRIMARY = [
             "--enable-bcc",
@@ -38,6 +106,7 @@ class Pyarmor91:
             "--enable-jit",
         ]
         
+        cls.options = []
         match mode:
             case "max":
                 # bcc, themida, expiry, + all secondary
@@ -55,7 +124,10 @@ class Pyarmor91:
         ]
 
     @classmethod
-    def execute(cls, wrap_main: bool = True) -> None:
+    def execute(cls, wrap_main: bool = False) -> None:
+
+        # Verify Required Project Files
+        Temp.verify()
         
         ## :: Wrap Code In Main To Force BCC ::
         if wrap_main:
@@ -63,6 +135,7 @@ class Pyarmor91:
             pass
         
         ## :: Execute Scripts ::
+        print()
         for script in cls.scripts:
             Executor.run(script)
 

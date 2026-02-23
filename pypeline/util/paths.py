@@ -29,8 +29,18 @@ class Temp:
         return os.path.join(cls.root, name)
 
     @classmethod
+    def verify(cls) -> None:
+        if not os.path.exists(cls.path("main.py")):
+            Log.error("Missing main.py in temp directory.")
+
+        if not os.path.exists(cls.path("main.spec")):
+            Log.error("Missing main.spec in temp directory.")
+
+    @classmethod
     def load(cls, path: os.PathLike) -> None:
 
+        print()
+        Log.send("Loading project files...", "cyan")
         sufficient = False
         for entry in os.listdir(path):
             

@@ -1,6 +1,6 @@
 
-from .util import Temp, Results, Log, Executor
-from .protection import Pyarmor91, Pyinstaller
+from .util import Temp, Util, Results, Log, Executor
+from .protection import Pyarmor91, Pyarmor92,Pyinstaller
 import shutil
 import time
 
@@ -18,11 +18,14 @@ def main(path_input: str, path_output: str) -> None:
     Pyinstaller.generateSpec(Temp.path("main.spec"))
 
     # Test
-    Pyarmor91.configure("max")
-    Pyarmor91.execute()
-    time.sleep(999)
+    # Pyarmor91.configure("max")
+    # Pyarmor91.execute()
 
-    # print(path_input, path_output)
-    # Executor.run(f'echo "Hello, World! > {path_output}"')
+    Pyarmor92.ECC()
+
+    print()
+    Log.send("Completed.", "green")
+    time.sleep(999)
+    # Util.rmTree(Temp.root, raiseError=False)
     
     
